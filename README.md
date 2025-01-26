@@ -8,6 +8,9 @@ de s'initier et s'entrainer à la gestion des droits utilisateurs SQL.
 
 ## Partie 1 - Démonstration - Base de données `gestion_droits`
 
+### Creation des utilisateurs
+1. Créez les utilisateurs suivants avec un mot de passe sécurisé : `user_lecture` et `user_ecriture`.
+
 ### Attribution des droits d'accès
 1. Autorisez l'utilisateur user_lecture à lire les données des tables `utilisateurs` et `produits`.
 2. Autorisez l'utilisateur user_ecriture à insérer, modifier et supprimer des données dans les tables `utilisateurs` et `produits`.
