@@ -47,7 +47,14 @@ les bonnes pratiques en matière de sécurité.
    - Pour `gestionnaire` : insérer un nouvel événement et modifier une réservation.
    - Pour `client` : essayer de lire les événements et de modifier une réservation.
 
-### Ajout et Révocation des Droits
-1. Ajoutez la permission de création d’événements pour le gestionnaire
-2. Révoquez l’accès de lecture aux réservations pour le client
-3. Testez les changements en vous connectant avec les utilisateurs affectés.
+### Implémentation de besoins métiers
+
+- Vous devez créer une vue permettant à un gestionnaire d'avoir une liste des participants à un événement donné, cette vue doit contenir les informations suivantes :
+   - Le nom de l'événement.
+   - La date de l'événement.
+   - Le lieu de l'événement.
+   - Le nom et l'email des participants.
+   - Le nombre de places réservées par chaque participant.
+
+- Vous ajusterez ensuite les permissions pour que le gestionnaire puisse consulter cette vue.
+
