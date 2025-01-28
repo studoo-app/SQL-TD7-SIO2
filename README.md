@@ -43,18 +43,48 @@ les bonnes pratiques en matière de sécurité.
     - `gestionnaire` : Accès en lecture et écriture aux événements et aux réservations, mais pas aux clients.
     - `client` : accès en lecture seule aux événements et réservations, avec possibilité de modifier ses propres réservations.
 3. Tester les permissions pour chaque utilisateur
-   - Pour `admin` : lire, insérer, modifier et supprimer dans toutes les tables.
-   - Pour `gestionnaire` : insérer un nouvel événement et modifier une réservation.
-   - Pour `client` : essayer de lire les événements et de modifier une réservation.
+    - Pour `admin` : lire, insérer, modifier et supprimer dans toutes les tables.
+    - Pour `gestionnaire` : insérer un nouvel événement et modifier une réservation.
+    - Pour `client` : essayer de lire les événements et de modifier une réservation.
 
 ### Implémentation de besoins métiers
 
 - Vous devez créer une vue permettant à un gestionnaire d'avoir une liste des participants à un événement donné, cette vue doit contenir les informations suivantes :
-   - Le nom de l'événement.
-   - La date de l'événement.
-   - Le lieu de l'événement.
-   - Le nom et l'email des participants.
-   - Le nombre de places réservées par chaque participant.
+    - Le nom de l'événement.
+    - La date de l'événement.
+    - Le lieu de l'événement.
+    - Le nom et l'email des participants.
+    - Le nombre de places réservées par chaque participant.
 
 - Vous ajusterez ensuite les permissions pour que le gestionnaire puisse consulter cette vue.
+
+## Partie 3 - Création d'un systeme de logs des opérations
+
+### Contexte
+
+Pour des raisons de sécurité et de traçabilité, vous devez mettre en place un système de logs des opérations effectuées
+de modifications sur les bases de données `gestion_evenements` et `gestion_droits`.
+
+
+### Création de la base des logs
+
+Vous créerez une nouvelle base de données `logs` contenant une table `modifications` avec les colonnes suivantes :
+
+- operation_type : Type de modification (INSERT, UPDATE, DELETE).
+- table_name : Nom de la table affectée.
+- modified_data : Données impliquées dans la modification (sous forme de JSON pour une flexibilité maximale).
+- user_name : Utilisateur ayant exécuté l'opération (obtenu via la variable SQL USER()).
+- operation_date : Date et heure de la modification.
+
+### Ajout des triggers
+
+Vous ajouterez des triggers sur les tables des bases de données `gestion_evenements` et `gestion_droits` pour enregistrer
+les opérations d'insertion, de modification et de suppression dans la table `modifications` de la base de données `logs`.
+
+### Adapatation des permissions
+
+Vous veillerez à autoriser les permissions d'écriture sur la table `modifications` de la base de données `logs` pour
+que tout utilisateur ayant les droits d'écriture sur les tables `gestion_evenements` et `gestion_droits` puisse enregistrer les logs.
+
+Ensuite vous créerez un utilisateur `logger` avec les droits de lecture sur la table `modifications` pour tester la bonne viusalisation des logs.
 
