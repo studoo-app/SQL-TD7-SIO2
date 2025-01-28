@@ -8,18 +8,19 @@ CREATE TABLE evenements (
     lieu VARCHAR(100) NOT NULL
 );
 
-CREATE TABLE reservations (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    client_id INT NOT NULL,
-    evenement_id INT NOT NULL,
-    places INT NOT NULL,
-    FOREIGN KEY (evenement_id) REFERENCES evenements(id)
-);
-
 CREATE TABLE clients (
     id INT AUTO_INCREMENT PRIMARY KEY,
     nom VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE reservations (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  client_id INT NOT NULL,
+  evenement_id INT NOT NULL,
+  places INT NOT NULL,
+  FOREIGN KEY (evenement_id) REFERENCES evenements(id),
+  FOREIGN KEY (client_id) REFERENCES clients(id)
 );
 
 INSERT INTO evenements (nom, date, lieu)
